@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}
+home
+{% endblock %}
+{% block content %}
+<h4 class="text-center text-primary p-2 mt-2 fw-bold listcontact">WELCOME TO MEDICAL APPOINTMENT </h4>
+<p class="ph text-center p-1 fw-bolder ">We are Here To Assist You</p>
+
+<h5 class="text-center fs-5 p-2 fw-bold ">Our Departments</h5>
+{% for d in dept %}
+<div class="card w-100 p-5 shadow-lg ">
+      <div class="d-flex justify-content-center"><img class="dep-img-top" src="{{ d.dep_image.url }}" alt="Card image cap"></div>
+    
+    <h2 class="listcontact fw-bold card-title text-center">{{d.dep_name}} </h2>
+  <div class="card-body  p-4 ">
+    
+    <p class="card-text text-start fonts listcontact  pd">
+      {{ d.dep_desc }}
+    </p>
+
+  </div>
+</div>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,71 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.foot{
+  background: #b8c4d6;
+}
+html{
+  font-size: 16px;
+}
+
+.navl ,.navu{
+  font-size: 2.5rem;
+  
+
+}
+.navl:hover{
+  color: #fff;
+  background: #c9cfde;
+  border-radius: 2px;
+}
+
+.texth{
+  font-size: 4rem;
+}
+.navll{
+  color: blue;
+}
+.navL{
+  font-size: 4rem;
+}
+.pfs{
+  font-size: 2rem;
+}
+.nav{
+  height:10rem;
+}
+.listcontact{
+  text-align: center;
+  padding: 1rem;
+}
+.lif{
+  color: #23262b;
+}
+.lifl{
+
+}
+
+  .submit_btn:focus {
+    box-shadow: none !important;
+    outline: 0px !important;
+  }
+  .headertext{
+    font-size:4rem;
+  }
+  
+  .offcanvas-title{
+    font-size: 4ren;
+  }
+ 
+  #form-title{
+    font-size: 3rem;
+  }
+.delete-button:hover{
+  background-color: #d72e5e;
+}
+.imgheight{
+  height:10px;
+}

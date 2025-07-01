@@ -1,0 +1,157 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}{% endblock %}</title>
+  <link rel="stylesheet" href="{% static '/css/base.css' %}">
+  <link rel="icon" href="{% static '/img/MAL.png' %}" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Metrophobic&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  {% load bootstrap5 %}
+  {% bootstrap_css %}
+  {% bootstrap_javascript %}
+  <style>
+    body {
+      font-family: 'Metrophobic', sans-serif;
+    }
+    footer {
+      background: #f0fcfe;
+    }
+    .offli:hover{
+      color : blue !important;
+    }
+    .bg-opacity {
+      background-color: rgba(0, 102, 204, 0.5);
+    }
+    .listcontact {
+      font-size: calc(1rem + 0.5vw);
+    }
+    .fs-1, .fs-3, .fs-4, .fs-5, .fs-6 {
+      font-size: inherit;
+    }
+    @media (max-width: 768px) {
+      .headertext {
+        font-size: 1.5rem;
+      }
+      .listcontact {
+        font-size: 1rem;
+      }
+      .offcanvas-mobile {
+        width: 75% !important;
+      }
+      .contact{
+        width: 75% !important;
+      }
+    }
+    @media (min-width: 769px) {
+      .headertext {
+        font-size: 2rem;
+      }
+      .listcontact {
+        font-size: 1.25rem;
+      }
+      .offcanvas-laptop {
+        width: 25% !important;
+      }
+      .contact{
+        width: 50% !important;
+      }
+      
+    }
+  </style>
+</head>
+<body>
+  <nav class="p-1 pb-2 sticky-top w-100">
+    <div class="bg-opacity">
+      <span class="navbar-toggler-icon my-auto d-flex align-content-center">
+        <a class="p-6 ml-6  listcontact" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+          <i class="text-white ml-2 fs-3 fa-sharp fa-solid fa-bars"></i>
+        </a>
+      </span>
+      <h1 class="text-white fw-bold text-center my-auto fs-2">Medical</h1>
+    </div>
+    <div class="offcanvas offcanvas-start offcanvas-mobile offcanvas-laptop" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+      <div class="offcanvas-header">
+        <img src="{% static '/img/MAL.png' %}" class="w-25 float-center">
+        <h4 class="offcanvas-title text-primary text-center fw-bold" id="offcanvasExampleLabel">MEDICAL</h4>
+        <button type="button" class="btn-close btn-outline-danger ml-1 p-2" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="bg-opacity">
+        <h3 class=" text-white text-center listcontact ml-4 fst-italic fs-3 ">Hello {{request.user}}</h3>
+      </div>
+      <div class="offcanvas-body">
+        <div>
+          <ul class="list-unstyled">
+            <li class="mt-2 text-center my-auto"><a class="fw-bold text-decoration-none fs-5 text-black offli" href="{% url 'home' %}">Home</a></li>
+            <li class="mt-2 text-center my-auto"><a class="fw-bold text-decoration-none fs-5 text-black offli" href="{% url 'about' %}">About</a></li>
+            <li class="mt-2 text-center my-auto"><a class="fw-bold text-decoration-none fs-5 text-black offli" href="{% url 'booking' %}">Booking</a></li>
+            <li class="mt-2 text-center my-auto"><a class="fw-bold text-decoration-none fs-5 text-black offli" href="{% url 'doctors' %}">Doctors</a></li>
+            <li class="mt-2 text-center my-auto"><a class="fw-bold text-decoration-none fs-5 text-black offli" href="{% url 'contact' %}">Contact</a></li>
+            {% if user.is_authenticated and user.is_superuser or user.is_staff %}
+            <li class="mt-2 text-center my-auto"><a class="fw-bold text-decoration-none fs-5 text-black offli" href="/admin/">Admin</a></li>
+            <li class="mt-2 text-center my-auto"><a class="fw-bold text-decoration-none fs-5 text-black offli" href="{% url 'appointment' %}">All Appointments</a></li>
+            {% endif %}
+            <li class="mt-2 text-center my-auto"><a class="fw-bold text-decoration-none fs-5 text-black offli" href="{% url 'myappointment' %}">My Appointments</a></li>
+            <li class="mt-2 text-center my-auto"><a class="fw-bold text-danger text-decoration-none fs-4" href="{% url 'logout' %}">Logout</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+  
+  <div class="container ">
+    <div class="d-flex justify-content-center ">
+      <div class="user_card">
+        <div class="d-flex justify-content-center">
+          <img src="{% static '/img/MAL.png' %}" class="w-25 float-center">
+
+        </div>
+        <div class="d-flex justify-content-center form_container">
+          <div class="alert p-4 text-center shadow-lg " role="alert ">
+            <p class="text-start">
+              Thankyou {{ patient }} for booking your medical appointment on {{ booking_date }} at {{ booking_time }} with {{ doctor }}. Please arrive 15 minutes early and remember to bring any necessary documentation or insurance cards. If you need to reschedule or have any questions, please contact us at <a href="www.medicalAppointment.com"class="list list-unstyled text-primary">medicalAppointment.com. </a>We look forward to assisting you with your healthcare needs
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div> 
+  <footer class="mt-2">
+    <div class="d-flex justify-content-center">
+      <p class=" text-primary fw-bold">EMERGENCY CONTACT: 7473392962</p>
+    </div>
+    <div class="d-flex justify-content-center">
+      <ul class="d-flex list-unstyled">
+        <li class=" fs-3 mx-3">
+          <a href="https://github.com/DJGuruji/MedicalAppointment">
+            <i class="fa-brands fa-github"></i>
+          </a>
+        </li>
+        <li class="fs-3 mx-3">
+          <a href="https://instagram.com/__krishnanath?utm_source=qr&igshid=MzNlNGNkZWQ4Mg%3D%3D">
+            <i class="fa-brands fa-square-instagram"></i>
+          </a>
+        </li>
+        <li class="fs-3 mx-3">
+          <a href="https://www.linkedin.com/in/krishnanath-s-24055a227">
+            <i class="fa-brands fa-linkedin"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="d-flex justify-content-center">
+      <p class=" my-auto">&copy; 2023 DJGURUJI</p>
+    </div>
+  </footer>
+</body>
+</html>
+
+
+
+ 
