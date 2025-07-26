@@ -6,11 +6,12 @@ from django.contrib.auth.decorators import login_required ,user_passes_test
 from django.shortcuts import get_object_or_404
 from django.contrib import messages
 from .forms import CreateUserForm,Bookingform
-from .models import *
-from django.core.mail import send_mail
+  
+from .models import Department, Doctor, Booking, STATUS_CHOICES
+from django.core.mail import send_mail, EmailMessage, EmailMultiAlternatives
 from django.conf import settings
 from django.template.loader import render_to_string
-from django.core.mail import EmailMessage,EmailMultiAlternatives
+
 from django.views.decorators.cache import never_cache
 
  
@@ -35,7 +36,7 @@ def register(request):
                 
                 email = EmailMultiAlternatives(subject, message, settings.EMAIL_HOST_USER, [recipient])
                 email.attach_alternative(card_html, 'text/html')
-                email.send(fail_silently=False)
+                #email.send(fail_silently=False)
                 
                 messages.success(request, 'Account created for ' + user)
                 return redirect('login')
@@ -115,7 +116,7 @@ def booking(request):
       email = EmailMultiAlternatives(subject, message,settings.EMAIL_HOST_USER, [recepiant])
      
       email.attach_alternative(card_html, 'text/html')
-      email.send(fail_silently=False)
+      #email.send(fail_silently=False)
         
       return render(request,'confirmation.html',context)
   return render(request, 'booking.html',dict_form)
