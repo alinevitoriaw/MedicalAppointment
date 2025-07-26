@@ -1,24 +1,16 @@
-# Create your views here.
 from django.shortcuts import render,redirect
-  
 from django.contrib.auth import authenticate, login, logout
-
 from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm
-  
 from django.contrib.auth.decorators import login_required ,user_passes_test
-  
+from django.shortcuts import get_object_or_404
 from django.contrib import messages
-
 from .forms import CreateUserForm,Bookingform
-  
 from .models import *
-
 from django.core.mail import send_mail
 from django.conf import settings
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage,EmailMultiAlternatives
-
 from django.views.decorators.cache import never_cache
 
  
@@ -54,10 +46,6 @@ def register(request):
         context = {'form': form}
         return render(request, 'register.html', context)
 
-
- 
-  
-  
 def user_login(request):
   if request.user.is_authenticated:
     return redirect('home')
@@ -76,16 +64,10 @@ def user_login(request):
   
   context = {}
   return render(request,'login.html', context)
-  
-
-
-  
-  
+ 
 def logout_user(request):
   logout(request)
   return redirect('login')
-
-
 
 @login_required(login_url ='login') 
 def index(request):
@@ -99,9 +81,6 @@ def index(request):
 @login_required(login_url ='login')   
 def about(request):
   return render(request, 'about.html')
-
-
-
 
 @login_required(login_url ='login') 
 def booking(request):
@@ -141,15 +120,9 @@ def booking(request):
       return render(request,'confirmation.html',context)
   return render(request, 'booking.html',dict_form)
  
-
-
 @login_required(login_url ='login') 
 def contact(request):
   return render(request, 'contact.html')
- 
-
-
- 
 
 @login_required(login_url ='login') 
 def delete(request,pk):
@@ -162,15 +135,12 @@ def delete(request,pk):
   }
   return render(request,'appointments.html',dict_book)
 
-
 @login_required(login_url='login')
 @never_cache
 def deletee(request, pk):
   Booking.objects.get(pk=pk).delete()
   user_bookings = Booking.objects.filter(user=request.user)
   return render(request, 'myappointments.html', {'bookings': user_bookings})
-
-
 
 def is_admin(user):
     return user.is_staff  # Assuming staff members are admins
@@ -182,9 +152,6 @@ def appointments(request):
     'booking' : Booking.objects.all()
   }
   return render(request,'appointments.html',dict_book)
- 
- 
-
 
 @login_required(login_url ='login') 
 def doctors(request):
@@ -192,12 +159,20 @@ def doctors(request):
     'dept' : Doctor.objects.all()
   }
   return render(request, 'doctors.html',dict_dept)
-  
-  
 
 @login_required(login_url='login')
 def myappointments(request):
     user = request.user  # Assuming you are using Django's built-in User model
     user_bookings = Booking.objects.filter(user=user)
     return render(request, 'myappointments.html', {'bookings': user_bookings})
-    
+
+@login_required(login_url='login')
+@user_passes_test(is_admin, login_url='login')
+def confirm_booking(request, booking_id):
+    if request.method == 'POST':
+        booking = get_object_or_404(Booking, id=booking_id)
+
+        booking.status = 'Confirmado'
+        booking.save()
+        messages.success(request, f"Agendamento de {booking.p_name} confirmado com sucesso!")
+    return redirect('appointment')
