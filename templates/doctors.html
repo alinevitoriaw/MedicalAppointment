@@ -7,7 +7,7 @@ doctors
 {% for d in dept %}
 <div class="card w-100 p-2">
   <div class="card-body shadow-lg py-4">
-    <div class="d-flex justify-content-center"><img class="card-img-top img-fluid" src="{{ d.doc_image.url }}" alt="Doctor's Image"></div>
+    <div class="d-flex justify-content-center"><img class="card-img-top img-fluid" src="{{ d.doc_image.url }}" alt="Foto do doutor"></div>
     <h4 class="card-title text-center fw-bolder">Dr. {{d.doc_name}}</h4>
     <h5 class="card-subtitle mb-1 text-body-secondary text-center">Specialized in: {{d.doc_spec}}</h5>
     <p class="card-text text-center">Department: {{ d.dep_name }}</p>
