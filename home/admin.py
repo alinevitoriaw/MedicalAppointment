@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import *
+from .models import Department, Doctor, Booking
 
 class DoctorAdmin(admin.ModelAdmin):
   list_display = ('id','doc_name','doc_spec','dep_name','doc_email','doc_phone')
