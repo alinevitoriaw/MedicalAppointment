@@ -31,9 +31,8 @@ class TimeInput(forms.TimeInput):
 class Bookingform(forms.ModelForm):
   class Meta:
     model = Booking
-   
-    exclude = ['user']
-    
+    fields = ['p_name', 'p_phone', 'p_email', 'doc_name', 'booking_date', 'booking_time']
+
     widgets = {
       'booking_date' : DateInput(attrs={'min': datetime.date.today() ,}),
       'p_name': forms.TextInput(attrs={'class': 'form-control',}),
@@ -41,7 +40,6 @@ class Bookingform(forms.ModelForm):
       'doc_name': forms.Select(attrs={'class': 'form-control',}),
       'p_email': forms.EmailInput(attrs={'class': 'form-control',}),
       'booking_time' : TimeInput(attrs={'class':'form-control',}),
-      
     }
     
     labels = {
@@ -51,8 +49,4 @@ class Bookingform(forms.ModelForm):
       'doc_name' : 'Choose Doctor',
       'booking_date' : 'Choose Date',
       'booking_time':'Choose Time'
-      
     }
-    
-    
-    
